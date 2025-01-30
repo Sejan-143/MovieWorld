@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Movie Info Website</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: #1c1c1c;
+            color: white;
+        }
+        header {
+            padding: 20px;
+            background-color: #ff5733;
+        }
+        input {
+            padding: 10px;
+            width: 60%;
+        }
+        button {
+            padding: 10px;
+            background-color: black;
+            color: white;
+            cursor: pointer;
+        }
+        #movie-container {
+            margin-top: 20px;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        .movie {
+            margin: 10px;
+            padding: 10px;
+            background: #2c2c2c;
+            border-radius: 10px;
+            width: 220px;
+        }
+        img {
+            width: 200px;
+            height: 300px;
+            border-radius: 10px;
+        }
+    </style>
+
+</head>
+<body>
+
+    <header>
+        <h1>Movie Finder 🌍</h1>
+        <input type="text" id="search" placeholder="Enter movie name...">
+        <button onclick="searchMovie()">Search</button>
+    </header>
+    <div id="movie-container"></div>
+
+    <script>
+        const movieDatabase = [
+            {
+                title: "Inception",
+                poster: "https://image.tmdb.org/t/p/w500/8h0foe6gdA6Xy25c6fyXvXmy9Tj.jpg",
+                rating: 8.8,
+                language: "English"
+            },
+            {
+                title: "Parasite",
+                poster: "https://image.tmdb.org/t/p/w500/6KhqR98wZ0GlkPqJ3mM4s5jePqa.jpg",
+                rating: 8.6,
+                language: "Korean"
+            },
+            {
+                title: "The Dark Knight",
+                poster: "https://image.tmdb.org/t/p/w500/1m2w15l8yzaWqO9S74pXxVvxJlO.jpg",
+                rating: 9.0,
+                language: "English"
+            }
+        ];
+
+        function searchMovie() {
+            let query = document.getElementById("search").value.toLowerCase();
+            let container = document.getElementById("movie-container");
+            container.innerHTML = "";
+
+            const filteredMovies = movieDatabase.filter(movie => 
+                movie.title.toLowerCase().includes(query)
+            );
+
+            if (filteredMovies.length > 0) {
+                filteredMovies.forEach(movie => {
+                    let movieElement = document.createElement("div");
+                    movieElement.classList.add("movie");
+                    movieElement.innerHTML = `
+                        <h3>${movie.title}</h3>
+                        <img src="${movie.poster}" alt="${movie.title}">
+                        <p>Rating: ${movie.rating}</p>
+                        <p>Language: ${movie.language}</p>
+                    `;
+                    container.appendChild(movieElement);
+                });
+            } else {
+                container.innerHTML = "<p>No movies found.</p>";
+            }
+        }
+    </script>
+
+</body>
+</html>
